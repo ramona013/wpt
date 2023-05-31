@@ -180,7 +180,7 @@ def install_command_flag_requirements(venv, props, kwargs):
 
 
 def main(prog=None, argv=None):
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     # Ensure we use the spawn start method for all multiprocessing
     try:
         multiprocessing.set_start_method('spawn')
