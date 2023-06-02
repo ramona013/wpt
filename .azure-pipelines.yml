@@ -476,7 +476,7 @@ jobs:
        eq(variables['Build.SourceBranch'], 'refs/heads/triggers/safari_stable'),
        and(eq(variables['Build.Reason'], 'Manual'), variables['run_all_safari']))
   strategy:
-    parallel: 8 # chosen to make runtime ~2h
+    parallel: 32 # split small because Azure Pipelines keeps failing
   timeoutInMinutes: 180
   pool:
     vmImage: 'macOS-13'
@@ -518,7 +518,7 @@ jobs:
        eq(variables['Build.SourceBranch'], 'refs/heads/triggers/safari_preview'),
        and(eq(variables['Build.Reason'], 'Manual'), variables['run_all_safari_preview']))
   strategy:
-    parallel: 8 # chosen to make runtime ~2h
+    parallel: 32 # split small because Azure Pipelines keeps failing
   timeoutInMinutes: 180
   pool:
     vmImage: 'macOS-13'
