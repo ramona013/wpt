@@ -113,3 +113,32 @@ function validateSelectURLResult(result, resolve_to_config) {
 
   return result.startsWith('urn:uuid:');
 }
+
+function updateUrlToUseNewOrigin(url, newOriginString) {
+  const origin = url.origin;
+  return new URL(url.toString().replace(origin, newOriginString));
+}
+
+function appendExpectedKeyAndValue(url, expectedKey, expectedValue) {
+  url.searchParams.append('expectedKey', expectedKey);
+  url.searchParams.append('expectedValue', expectedValue);
+  return url;
+}
+
+function parseExpectedKeyAndValueData() {
+  const url = new URL(location.href);
+  const key = url.searchParams.get('expectedKey');
+  const value = url.searchParams.get('expectedValue');
+  return {'expectedKey': key, 'expectedValue': value};
+}
+
+function appendExpectedKey(url, expectedKey) {
+  url.searchParams.append('expectedKey', expectedKey);
+  return url;
+}
+
+function parseExpectedKeyData() {
+  const url = new URL(location.href);
+  const key = url.searchParams.get('expectedKey');
+  return {'expectedKey': key};
+}
