@@ -108,13 +108,13 @@ promise_test(async (t) => {
   // Tests for resouces which failed to load.
   verify({
     performance: performance,
-    resource: 'resources/missing.jpg',
+    resource: 'resources/missing.py',
     mode: 'same-origin',
     description: 'Network fallback load failure',
   });
   verify({
     performance: performance,
-    resource: 'resources/missing.jpg',
+    resource: 'resources/missing.py',
     mode: 'cross-origin',
     description: 'Network fallback cross-origin load failure',
   });

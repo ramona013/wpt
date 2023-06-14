@@ -143,7 +143,7 @@ function fetchResourceWithNoPolicy(subdomain) {
  */
 
 function getURLForMissingResource(subdomain) {
-  return _getNELResourceURL(subdomain, "nonexistent.png");
+  return _getNELResourceURL(subdomain, "nonexistent.py");
 }
 
 function fetchMissingResource(subdomain) {
