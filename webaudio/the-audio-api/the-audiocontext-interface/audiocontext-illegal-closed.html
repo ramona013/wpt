@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script type="module">
+"use strict";
+
+// A closed `AudioContext` will reject calls to `close`.
+async function closeClosed() {
+  var ac = new AudioContext();
+  await new Promise((resolve) => (ac.onstatechange = resolve));
+  await ac.close();
+
+  try {
+    ac.close();
+  } catch (err) {
+    assert_true(false, "Cannot close a closed AudioContext.");
+  }
+}
+
+// A closed `AudioContext` will reject calls to `resume`.
+async function resumeClosed() {
+  var ac = new AudioContext();
+  await new Promise((resolve) => (ac.onstatechange = resolve));
+  await ac.close();
+
+  try {
+    ac.resume();
+  } catch (err) {
+    assert_true(false, "Cannot resume a closed AudioContext.");
+  }
+}
+
+// A closed `AudioContext` will reject calls to `suspend`.
+async function suspendClosed() {
+  var ac = new AudioContext();
+  await new Promise((resolve) => (ac.onstatechange = resolve));
+  await ac.close();
+
+  try {
+    ac.suspend();
+  } catch (err) {
+    assert_true(false, "Cannot suspend a closed AudioContext.");
+  }
+}
+
+var tests = [
+  closeClosed,
+  resumeClosed,
+  suspendClosed
+];
+
+tests.forEach(function (f) {
+  promise_test(f, f.name);
+});
+    </script>
+  </head>
+</html>
