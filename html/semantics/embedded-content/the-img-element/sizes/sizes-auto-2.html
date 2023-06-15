@@ -61,34 +61,10 @@ const tests = [
   {sizes: '', 'data-ref': 'ref2'},
 
   // Actual tests
-  {loading: 'lazy', sizes: 'auto', width: '10', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'AUTO', width: '10', 'data-ref': 'ref1'},
-  {loading: 'lazy', width: '10', 'data-ref': 'ref1'},
-  {loading: 'lazy', style: 'width: 10px', 'data-ref': 'ref1'},
-  {loading: 'lazy', style: 'width: 100%; max-width: 10px', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', width: '500', 'data-ref': 'ref2'},
-  {loading: 'lazy', sizes: 'auto', width: '10', style: 'visibility: hidden', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', width: '10', style: 'display: inline', hidden: '', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto, 100vw', width: '10', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: '100vw, auto', width: '10', 'data-ref': 'ref2'},
-  {loading: 'eager', sizes: 'auto', width: '10', 'data-ref': 'ref2'},
-  {loading: 'lazy', sizes: 'auto', width: '100%', parent: 'narrow-div', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', width: '100%', parent: 'wide-div', 'data-ref': 'ref2'},
-  {loading: 'lazy', sizes: 'auto', style: 'height: 10px; aspect-ratio: 10 / 10', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'height: 10px; aspect-ratio: 500 / 10', 'data-ref': 'ref2'},
-  {loading: 'lazy', sizes: 'auto', style: 'min-height: 10px; aspect-ratio: 10 / 10', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'min-height: 10px; aspect-ratio: 500 / 10', 'data-ref': 'ref2'},
-  {loading: 'lazy', sizes: 'auto', style: 'inline-size: 10px', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'min-inline-size: 10px', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'block-size: 10px; aspect-ratio: 10 / 10', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'min-block-size: 10px; aspect-ratio: 10 / 10', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'block-size: 10px; writing-mode: vertical-rl', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'min-block-size: 10px; writing-mode: vertical-rl', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'inline-size: 10px; aspect-ratio: 10/10; writing-mode: vertical-rl', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'min-inline-size: 10px; aspect-ratio: 10/10; writing-mode: vertical-rl', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: '--my-width: 10px; width: var(--my-width)', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'width: calc(5px + 5px)', 'data-ref': 'ref1'},
-  {loading: 'lazy', sizes: 'auto', style: 'position: absolute; left: 50%; right: 49%', 'data-ref': 'ref2'}, // replaced elements don't get the width resolved from 'left'/'right' per https://drafts.csswg.org/css2/#abs-replaced-width
+  {loading: 'lazy', style: 'max-width: 10px', 'data-ref': 'ref2'}, // no specified width -> 0 -> 100vw
+  {loading: 'lazy', sizes: 'auto', width: '0', 'data-ref': 'ref2'}, // 0 -> 100vw
+  {loading: 'lazy', sizes: 'auto', style: 'width: 0px', 'data-ref': 'ref2'}, // 0 -> 100vw
+  {loading: 'lazy', sizes: 'auto', 'data-ref': 'ref2'}, // no specified width -> 0 -> 100vw
 ];
 
 function test_img(obj, i) {
@@ -101,7 +77,7 @@ function test_img(obj, i) {
       img.setAttribute(attr, obj[attr]);
     }
   }
-  img.srcset = `/images/green-1x1.png?img${i} 50w, /images/green-16x16.png?img${i} 51w`
+  img.srcset = `/images/green-1x1.png?img${i} 1w, /images/green-16x16.png?img${i} 16w`
   parent.appendChild(img);
   check(img);
 }
@@ -126,7 +102,7 @@ function test_picture(obj, i) {
         break;
     }
   }
-  source.srcset = `/images/green-1x1.png?picture${i} 50w, /images/green-16x16.png?picture${i} 51w`;
+  source.srcset = `/images/green-1x1.png?picture${i} 1w, /images/green-16x16.png?picture${i} 16w`;
   picture.appendChild(source);
   picture.appendChild(img);
   parent.appendChild(picture);
